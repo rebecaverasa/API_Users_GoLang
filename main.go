@@ -86,6 +86,20 @@ func getUserById(id string) (*user, error) {
 	return nil, errors.New("User not found")
 }
 
+func deleteUserById(c *gin.Context) {
+	id := c.Param("id")
+
+	for i, a := range users {
+		if a.Id == id {
+			aux := users[i+1:]
+			users = append(users[:i], aux...)
+
+			c.IndentedJSON(http.StatusOK, users)
+			return
+		}
+	}
+}
+
 
 func main() {
 	router := gin.Default()
@@ -93,5 +107,6 @@ func main() {
 	router.GET("/users/:id", getUser)
 	router.PATCH("/users/:id", getUser)
 	router.POST("/users", createUser)
+	router.DELETE("/users/:id", deleteUserById)
 	router.Run("localhost:9090")
 }

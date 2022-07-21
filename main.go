@@ -90,7 +90,7 @@ func deleteUserById(context *gin.Context) {
 
 	for i, a := range users {
 		if a.Id == id {
-			aux := users[i+1:]                //aqui pega os usuarios depois do usuario que digitei
+			aux := users[i+1:]              //aqui pega os usuarios depois do usuario que digitei
 			users = append(users[:i], aux...) //o users deixa de ser o elemento completo e passa a ser o users sem o numero que quero deletar
 
 			context.IndentedJSON(http.StatusOK, users)
@@ -104,7 +104,6 @@ func main() {
 	router := gin.Default()
 	router.GET("/users", getUsers)
 	router.GET("/users/:id", getUser)
-	router.PATCH("/users/:id", getUser)
 	router.POST("/users", createUser)
 	router.DELETE("/users/:id", deleteUserById)
 	router.Run("localhost:9090")
